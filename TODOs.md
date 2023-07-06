@@ -1,0 +1,11 @@
+# 開発環境の用意
+- リポジトリのクローン
+- パッケージのインストール
+  - `npm install`
+  - `node_modules`を`.gitignore`に入れる
+- ESLINTの準備
+  - `npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin`
+  - `.eslintrc.js`または`.eslintrc.json`という名前の`ESLint`設定ファイルをプロジェクトのルートに作成
+  - そして、`package.json`の`scripts`セクションに`ESLint`のスクリプトを追加
+  - 以下のコマンドを実行すると、プロジェクト内のすべての`JavaScript`と`TypeScript`ファイルが`ESLint`によってチェックされます。
+    - `npm run lint`
