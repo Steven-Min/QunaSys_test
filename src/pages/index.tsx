@@ -43,7 +43,7 @@ export default function Home(props: any) {
   React.useEffect(() => {
     let myChart: any = null;
     const cereals = props.cereals.map((cereal: any) => {
-      return { x: cereal.calories, y: cereal.carbo };
+      return { x: cereal[xAxis], y: cereal[yAxis] };
     });
     const config: any = {
       type: 'scatter',
@@ -67,7 +67,7 @@ export default function Home(props: any) {
             display: true,
             title: {
               display: true,
-              text: 'Calories',
+              text: xAxis,
               font: {
                 size: 20,
                 weight: 'bold',
@@ -80,7 +80,7 @@ export default function Home(props: any) {
             display: true,
             title: {
               display: true,
-              text: 'Carbo',
+              text: yAxis,
               font: {
                 size: 20,
                 weight: 'bold',
