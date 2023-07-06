@@ -5,7 +5,29 @@ import Chart from 'chart.js/auto';
 
 const inter = Inter({ subsets: ['latin'] });
 
+interface Cereal {
+  name: string;
+  calories: number;
+  protein: number;
+  fat: number;
+  sodium: number;
+  fiber: number;
+  carbo: number;
+  sugars: number;
+  potass: number;
+  vitamins: number;
+  shelf: number;
+  weight: number;
+  cups: number;
+  rating: number;
+}
+
 export default function Home(props: any) {
+  const AXIS_PROPERTIES: Array<keyof Cereal> = [
+    'calories', 'protein', 'fat', 'sodium', 'fiber', 'carbo', 'sugars',
+    'potass', 'vitamins', 'shelf', 'weight', 'cups', 'rating'
+  ];
+
   React.useEffect(() => {
     let myChart: any = null;
     const cereals = props.cereals.map((cereal: any) => {
