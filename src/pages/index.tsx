@@ -31,6 +31,9 @@ export default function Home(props: any) {
   const [yAxis, setYAxis] = useState<keyof Cereal>('carbo');
   const chartInstanceRef = React.useRef<Chart | null>(null);
 
+  const [selectedMfr, setSelectedMfr] = React.useState<string>('');
+  const [selectedType, setSelectedType] = React.useState<string>('');
+
   const handleXAxisChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as keyof Cereal;
     setXAxis(selectedValue);
