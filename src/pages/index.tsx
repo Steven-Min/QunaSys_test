@@ -6,20 +6,22 @@ import Chart, { ChartConfiguration } from 'chart.js/auto';
 const inter = Inter({ subsets: ['latin'] });
 
 interface Cereal {
-  name: string;
-  calories: number;
-  protein: number;
-  fat: number;
-  sodium: number;
-  fiber: number;
-  carbo: number;
-  sugars: number;
-  potass: number;
-  vitamins: number;
-  shelf: number;
-  weight: number;
-  cups: number;
-  rating: number;
+  name: String,
+  mfr: String,
+  type: String,
+  calories: String,
+  protein: String,
+  fat: String,
+  sodium: String,
+  fiber: String,
+  carbo: String,
+  sugars: String,
+  potass: String,
+  vitamins: String,
+  shelf: String,
+  weight: String,
+  cups: String,
+  rating: String,
 }
 
 export default function Home(props: any) {
@@ -33,6 +35,9 @@ export default function Home(props: any) {
 
   const [selectedMfr, setSelectedMfr] = React.useState<string>('');
   const [selectedType, setSelectedType] = React.useState<string>('');
+
+  const uniqueMfrs = React.useMemo(() => Array.from(new Set(props.cereals.map((cereal: Cereal) => cereal.mfr))), [props.cereals]);
+  const uniqueTypes = React.useMemo(() => Array.from(new Set(props.cereals.map((cereal: Cereal) => cereal.type))), [props.cereals]);
 
   const handleXAxisChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as keyof Cereal;
