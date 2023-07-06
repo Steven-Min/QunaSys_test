@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Inter } from '@next/font/google';
 import React, { useState } from 'react';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
+import styles from '../styles/styles.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -49,9 +50,13 @@ export default function Home(props: any) {
     setYAxis(selectedValue);
   };
 
+  const filteredCereals = props.cereals.filter((cereal: Cereal) => {
+    return (!selectedMfr || cereal.mfr === selectedMfr) && (!selectedType || cereal.type === selectedType);
+  });
+
   React.useEffect(() => {
     let myChart: any = null;
-    const cereals = props.cereals.map((cereal: any) => {
+    const cereals = filteredCereals.map((cereal: Cereal) => {
       return { x: cereal[xAxis], y: cereal[yAxis] };
     });
     const config: ChartConfiguration<'scatter', number[], { x: number, y: number }> = {
@@ -110,7 +115,7 @@ export default function Home(props: any) {
         document.getElementById('myChart') as HTMLCanvasElement,
         config
     );
-  }, [xAxis, yAxis]);
+  }, [xAxis, yAxis, selectedMfr, selectedType]);
   return (
     <>
       <Head>
@@ -120,34 +125,36 @@ export default function Home(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <section>
+          <select className={styles.selectBox} value={xAxis} onChange={handleXAxisChange}>
+            {AXIS_PROPERTIES.map((property) => (
+                <option key={property} value={property}>
+                  {property}
+                </option>
+            ))}
+          </select>
+          <select className={styles.selectBox} value={yAxis} onChange={handleYAxisChange}>
+            {AXIS_PROPERTIES.map((property) => (
+                <option key={property} value={property}>
+                  {property}
+                </option>
+            ))}
+          </select>
+        </section>
         <section style={{ padding: '10pt' }}>
-          <select value={selectedMfr} onChange={(e) => setSelectedMfr(e.target.value)}>
+          <select className={styles.selectBox} value={selectedMfr} onChange={(e) => setSelectedMfr(e.target.value)}>
             <option value=''>Select Mfr</option>
             {uniqueMfrs.map(mfr => (
                 <option key={mfr} value={mfr}>{mfr}</option>
             ))}
           </select>
-          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+          <select className={styles.selectBox} value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
             <option value=''>Select Type</option>
             {uniqueTypes.map(type => (
                 <option key={type} value={type}>{type}</option>
             ))}
           </select>
         </section>
-        <select value={xAxis} onChange={handleXAxisChange}>
-          {AXIS_PROPERTIES.map((property) => (
-              <option key={property} value={property}>
-                {property}
-              </option>
-          ))}
-        </select>
-        <select value={yAxis} onChange={handleYAxisChange}>
-          {AXIS_PROPERTIES.map((property) => (
-              <option key={property} value={property}>
-                {property}
-              </option>
-          ))}
-        </select>
         <section style={{ padding: '10pt' }}>
           <h1>chart-js-app</h1>
           <p>シリアルのデータ</p>

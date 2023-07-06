@@ -1,0 +1,11 @@
+.selectBox {
+    width: 200px;
+    height: 40px;
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 5px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    color: #333333;
+}
