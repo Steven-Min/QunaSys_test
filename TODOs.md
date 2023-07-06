@@ -15,3 +15,11 @@
   - `package.json`の`scripts`セクションに`Prettier`のスクリプトを追加
   - 以下のコマンドを実行すると、プロジェクト内のすべてのサポートされるファイルが`Prettier`によってフォーマットされる
     - npm run format
+- `ユニットテスト`の準備
+  - ユニットテストを導入するために、`Jest`と`React Testing Library`が広く使用されます
+  - `npm install --save-dev jest @types/jest @testing-library/react @testing-library/jest-dom ts-jest`
+  - `Jest`の設定ファイルである`jest.config.js`をプロジェクトのルートに作成します
+  - テストスクリプトを簡単に実行できるように、`package.json`の`scripts`セクションに以下のようなスクリプトを追加
+    - "test": "jest"
+  - テストを作成し、以下のコマンドを実行すると、`Jest`がプロジェクト内のすべてのテストを実行します
+    - `npm run test`
