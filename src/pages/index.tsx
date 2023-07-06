@@ -30,6 +30,16 @@ export default function Home(props: any) {
   const [xAxis, setXAxis] = useState<keyof Cereal>('calories');
   const [yAxis, setYAxis] = useState<keyof Cereal>('carbo');
 
+  const handleXAxisChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value as keyof Cereal;
+    setXAxis(selectedValue);
+  };
+
+  const handleYAxisChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value as keyof Cereal;
+    setYAxis(selectedValue);
+  };
+
   React.useEffect(() => {
     let myChart: any = null;
     const cereals = props.cereals.map((cereal: any) => {
