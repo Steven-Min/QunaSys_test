@@ -120,6 +120,20 @@ export default function Home(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <section style={{ padding: '10pt' }}>
+          <select value={selectedMfr} onChange={(e) => setSelectedMfr(e.target.value)}>
+            <option value=''>Select Mfr</option>
+            {uniqueMfrs.map(mfr => (
+                <option key={mfr} value={mfr}>{mfr}</option>
+            ))}
+          </select>
+          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+            <option value=''>Select Type</option>
+            {uniqueTypes.map(type => (
+                <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        </section>
         <select value={xAxis} onChange={handleXAxisChange}>
           {AXIS_PROPERTIES.map((property) => (
               <option key={property} value={property}>
