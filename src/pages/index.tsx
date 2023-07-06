@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
-import React from 'react';
+import React, { useState } from 'react';
 import Chart from 'chart.js/auto';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -27,6 +27,8 @@ export default function Home(props: any) {
     'calories', 'protein', 'fat', 'sodium', 'fiber', 'carbo', 'sugars',
     'potass', 'vitamins', 'shelf', 'weight', 'cups', 'rating'
   ];
+  const [xAxis, setXAxis] = useState<keyof Cereal>('calories');
+  const [yAxis, setYAxis] = useState<keyof Cereal>('carbo');
 
   React.useEffect(() => {
     let myChart: any = null;
