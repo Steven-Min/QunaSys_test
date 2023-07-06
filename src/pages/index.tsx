@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
 import React, { useState } from 'react';
-import Chart from 'chart.js/auto';
+import Chart, { ChartConfiguration } from 'chart.js/auto';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,6 +29,7 @@ export default function Home(props: any) {
   ];
   const [xAxis, setXAxis] = useState<keyof Cereal>('calories');
   const [yAxis, setYAxis] = useState<keyof Cereal>('carbo');
+  const chartInstanceRef = React.useRef<Chart | null>(null);
 
   const handleXAxisChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as keyof Cereal;
@@ -45,7 +46,7 @@ export default function Home(props: any) {
     const cereals = props.cereals.map((cereal: any) => {
       return { x: cereal[xAxis], y: cereal[yAxis] };
     });
-    const config: any = {
+    const config: ChartConfiguration<'scatter', number[], { x: number, y: number }> = {
       type: 'scatter',
       data: {
         datasets: [
@@ -92,14 +93,16 @@ export default function Home(props: any) {
         },
       },
     };
-    myChart = new Chart(
-      document.getElementById('myChart') as HTMLCanvasElement,
-      config
+    // 既存のチャートをクリア
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+    // 新たなチャートインスタンスを作成して状態に保存
+    chartInstanceRef.current = new Chart(
+        document.getElementById('myChart') as HTMLCanvasElement,
+        config
     );
-    return () => {
-      myChart.destroy();
-    };
-  }, []);
+  }, [xAxis, yAxis]);
   return (
     <>
       <Head>
@@ -109,6 +112,20 @@ export default function Home(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <select value={xAxis} onChange={handleXAxisChange}>
+          {AXIS_PROPERTIES.map((property) => (
+              <option key={property} value={property}>
+                {property}
+              </option>
+          ))}
+        </select>
+        <select value={yAxis} onChange={handleYAxisChange}>
+          {AXIS_PROPERTIES.map((property) => (
+              <option key={property} value={property}>
+                {property}
+              </option>
+          ))}
+        </select>
         <section style={{ padding: '10pt' }}>
           <h1>chart-js-app</h1>
           <p>シリアルのデータ</p>
